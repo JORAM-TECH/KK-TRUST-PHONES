@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KK Trust Phones</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+        }
+
+        header {
+            background: #0d47a1;
+            color: white;
+            padding: 20px;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        nav {
+            margin-top: 10px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+        }
+
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, .6), rgba(0, 0, 0, .6)),
+                url('https://images.unsplash.com/photo-1511707171634-5f897ff02aa9');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 100px 20px;
+        }
+
+        .hero h1 {
+            font-size: 50px;
+        }
+
+        .hero p {
+            margin-top: 15px;
+            font-size: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #ff6f00;
+            color: white;
+            padding: 12px 25px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .section {
+            padding: 60px 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .section h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #0d47a1;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .1);
+            text-align: center;
+        }
+
+        .card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .card h3 {
+            margin: 15px 0;
+        }
+
+        .price {
+            color: #ff6f00;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        footer {
+            background: #0d47a1;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .whatsapp {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #25D366;
+            color: white;
+            padding: 15px;
+            border-radius: 50%;
+            text-decoration: none;
+            font-size: 25px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo">KK Trust Phones</div>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Products</a>
+            <a href="#">About</a>
+            <a href="#">Contact</a>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Welcome to KK Trust Phones</h1>
+        <p>Original Smartphones • Affordable Prices • Trusted Service</p>
+        <a href="#products" class="btn">Shop Now</a>
+    </section>
+
+    <section class="section" id="products">
+        <h2>Featured Phones</h2>
+
+        <div class="products">
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1598327105666-5b89351aff97" alt="">
+                <h3>Infinix Hot Series</h3>
+                <p class="price">UGX 450,000+</p>
+            </div>
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c" alt="">
+                <h3>Tecno Spark Series</h3>
+                <p class="price">UGX 400,000+</p>
+            </div>
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1580910051074-3eb694886505" alt="">
+                <h3>Itel Smartphones</h3>
+                <p class="price">UGX 250,000+</p>
+            </div>
+
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1511707171634-5f897ff02aa9" alt="">
+                <h3>Japan Used Phones</h3>
+                <p class="price">UGX 300,000+</p>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Why Choose KK Trust Phones?</h2>
+        <div class="products">
+            <div class="card">
+                <h3>100% Genuine Phones</h3>
+            </div>
+
+            <div class="card">
+                <h3>Affordable Prices</h3>
+            </div>
+
+            <div class="card">
+                <h3>Fast Customer Support</h3>
+            </div>
+
+            <div class="card">
+                <h3>Trusted by Customers</h3>
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Contact Us</h2>
+        <div class="card">
+            <h3>KK Trust Phones</h3>
+            <p>📞 0700362107</p>
+            <p>📍 Uganda</p>
+            <p>📧 sales@kktrustphones.com</p>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2026 KK Trust Phones. All Rights Reserved.</p>
+    </footer>
+
+    <a class="whatsapp" href="https://wa.me/256700362107">💬</a>
+
+</body>
+
+</html>
