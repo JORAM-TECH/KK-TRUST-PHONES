@@ -64,6 +64,8 @@ https://3000-<BASE44_PUBLIC_HOST_SUFFIX>/auth/google/callback
 
 - Pages: `/` (shop), `/login`, `/manage` (requires a session, otherwise redirects to
   `/login?next=%2Fmanage`), `/html.index.html`.
+- `/favicon.ico` and `/favicon.svg` both serve `favicon.svg` — browsers request the icon on
+  every fresh load, so without this route the preview logs a 404.
 - `GET /auth/google` → Google consent; `GET /auth/google/callback` → sets the session
   cookie and redirects to `/manage`; `POST /auth/logout` clears it.
 - `GET /api/me` — `{ user, googleConfigured }`.

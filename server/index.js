@@ -67,6 +67,10 @@ function handle(fn) {
   };
 }
 
+// --- favicon --------------------------------------------------------------
+// Browsers ask for /favicon.ico on every fresh page load; the site shipped without one.
+app.get(['/favicon.ico', '/favicon.svg'], (req, res) => res.sendFile(path.join(ROOT, 'favicon.svg')));
+
 // --- pages ----------------------------------------------------------------
 app.get('/', (req, res) => sendPage(res, PAGES['/']));
 app.get('/html.html', (req, res) => sendPage(res, PAGES['/html.html']));
