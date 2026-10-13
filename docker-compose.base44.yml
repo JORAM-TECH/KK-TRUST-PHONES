@@ -1,0 +1,45 @@
+# Base44 sandbox/dev environment for KK Trust Phones.
+#
+# The project is a plain static site (html.html + html.index.html, no build step),
+# so the app service runs the repo straight from the bind mount with a
+# live-reloading static dev server instead of any prebuilt image.
+#
+# Usage: docker compose -f docker-compose.base44.yml up -d
+services:
+  web:
+    build:
+      context: .
+      dockerfile_inline: |
+        FROM node:22-alpine
+        RUN npm install -g live-server@1.2.2
+    working_dir: /app
+    volumes:
+      - .:/app
+    # The repo is bind-mounted from the sandbox, so the file watcher needs polling
+    # to pick up edits and trigger live reload.
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - CHOKIDAR_INTERVAL=300
+    # html.html is the only complete document in the repo; the other HTML file is a
+    # partial, so it is served as the entry page and stays reachable at /html.index.html.
+    command:
+      - live-server
+      - --host=0.0.0.0
+      - --port=3000
+      - --no-browser
+      - --entry-file=html.html
+      - --wait=200
+      - .
+    ports:
+      - "3000:3000"
+    restart: on-failure
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "wget -q --spider http://127.0.0.1:3000/ || (echo 'web: homepage not responding'; exit 1)",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
