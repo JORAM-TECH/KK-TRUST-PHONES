@@ -1,45 +1,43 @@
 # Base44 sandbox/dev environment for KK Trust Phones.
 #
-# The project is a plain static site (html.html + html.index.html, no build step),
-# so the app service runs the repo straight from the bind mount with a
-# live-reloading static dev server instead of any prebuilt image.
+# One development service running the repo straight from the bind mount:
+#   - Node/Express server (server/index.js) serving the static pages and the
+#     sign-in + phone-listing APIs, with `node --watch` for live reload.
+#   - Dependencies are installed from package-lock.json on startup into a named
+#     volume, so source edits never need an image rebuild.
 #
 # Usage: docker compose -f docker-compose.base44.yml up -d
 services:
   web:
-    build:
-      context: .
-      dockerfile_inline: |
-        FROM node:22-alpine
-        RUN npm install -g live-server@1.2.2
+    image: node:22-alpine
     working_dir: /app
     volumes:
       - .:/app
-    # The repo is bind-mounted from the sandbox, so the file watcher needs polling
-    # to pick up edits and trigger live reload.
+      - node_modules:/app/node_modules
     environment:
-      - CHOKIDAR_USEPOLLING=true
-      - CHOKIDAR_INTERVAL=300
-    # html.html is the only complete document in the repo; the other HTML file is a
-    # partial, so it is served as the entry page and stays reachable at /html.index.html.
+      - NODE_ENV=development
+      - PORT=3000
+      # Browser-facing origin, used to build the Google OAuth redirect URI: behind
+      # the preview proxy the request host is the internal sandbox host, not the
+      # URL the shopper's browser is actually on.
+      - APP_BASE_URL=https://3000-${BASE44_PUBLIC_HOST_SUFFIX}
+    # Platform-managed secrets (Google OAuth credentials, session signing key).
+    # Listed last so the user's dashboard values always win.
+    env_file:
+      - /run/base44/app.env
     command:
-      - live-server
-      - --host=0.0.0.0
-      - --port=3000
-      - --no-browser
-      - --entry-file=html.html
-      - --wait=200
-      - .
+      - sh
+      - -ec
+      - npm ci --omit=dev --no-audit --no-fund && exec node --watch server/index.js
     ports:
       - "3000:3000"
     restart: on-failure
     healthcheck:
-      test:
-        [
-          "CMD-SHELL",
-          "wget -q --spider http://127.0.0.1:3000/ || (echo 'web: homepage not responding'; exit 1)",
-        ]
+      test: ["CMD-SHELL", "wget -q --spider http://127.0.0.1:3000/ || (echo 'web: homepage not responding'; exit 1)"]
       interval: 10s
       timeout: 5s
       retries: 5
-      start_period: 10s
+      start_period: 15s
+
+volumes:
+  node_modules:

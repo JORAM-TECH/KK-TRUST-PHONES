@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign in | KK Trust Phones</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: #0d47a1;
+            color: white;
+            padding: 20px;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .logo a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        nav {
+            margin-top: 10px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, .1);
+            width: 100%;
+            max-width: 420px;
+            text-align: center;
+        }
+
+        .card h1 {
+            color: #0d47a1;
+            font-size: 28px;
+            margin-bottom: 12px;
+        }
+
+        .muted {
+            color: #555;
+            margin-bottom: 25px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: #ff6f00;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 16px;
+        }
+
+        .error,
+        .notice {
+            text-align: left;
+            padding: 12px 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        .error {
+            background: #ffebee;
+            color: #b71c1c;
+        }
+
+        .notice {
+            background: #fff8e1;
+            color: #8d6e00;
+        }
+
+        .back {
+            display: block;
+            margin-top: 25px;
+            color: #0d47a1;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        footer {
+            background: #0d47a1;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="logo"><a href="/">KK Trust Phones</a></div>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/#products">Products</a>
+            <a href="/#contact">Contact</a>
+            <a href="/login">Sign in</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="card">
+            <h1>Sign in</h1>
+            <p class="muted">Sign in with your Google account to manage the phone listings.</p>
+
+            <div class="error" id="error" hidden></div>
+            <div class="notice" id="notice" hidden></div>
+
+            <a class="btn" id="google" href="/auth/google" hidden>Sign in with Google</a>
+
+            <a class="back" href="/">← Back to the shop</a>
+        </div>
+    </main>
+
+    <footer>
+        <p>© 2026 KK Trust Phones. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const errorBox = document.getElementById('error');
+        const noticeBox = document.getElementById('notice');
+        const googleButton = document.getElementById('google');
+
+        const error = new URLSearchParams(location.search).get('error');
+        if (error) {
+            errorBox.textContent = error;
+            errorBox.hidden = false;
+        }
+
+        fetch('/api/me')
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.user) {
+                    location.replace('/manage');
+                    return;
+                }
+                if (data.googleConfigured) {
+                    googleButton.hidden = false;
+                } else {
+                    noticeBox.textContent = 'Google sign-in is not set up yet: add GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET, then reload this page.';
+                    noticeBox.hidden = false;
+                }
+            })
+            .catch(() => {
+                errorBox.textContent = 'Could not reach the server. Please reload the page.';
+                errorBox.hidden = false;
+            });
+    </script>
+
+</body>
+
+</html>

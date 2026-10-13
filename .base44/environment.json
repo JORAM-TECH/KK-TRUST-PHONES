@@ -2,5 +2,22 @@
   "previewPort": 3000,
   "healthPath": "/",
   "startCommand": "docker compose -f docker-compose.base44.yml up -d",
-  "secrets": []
+  "secrets": [
+    {
+      "name": "GOOGLE_CLIENT_ID",
+      "description": "Google OAuth client ID used for shopper sign-in. Create an OAuth client (Web application) in Google Cloud Console -> APIs & Services -> Credentials, then add the sandbox callback URL as an authorised redirect URI.",
+      "requiredAtBoot": false
+    },
+    {
+      "name": "GOOGLE_CLIENT_SECRET",
+      "description": "Secret paired with GOOGLE_CLIENT_ID, from the same Google Cloud Console OAuth client.",
+      "requiredAtBoot": false
+    },
+    {
+      "name": "SESSION_SECRET",
+      "description": "Signing key for the signed sign-in cookie.",
+      "requiredAtBoot": true,
+      "generatedForDevelopment": true
+    }
+  ]
 }
