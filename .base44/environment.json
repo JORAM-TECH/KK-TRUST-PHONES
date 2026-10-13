@@ -5,13 +5,15 @@
   "secrets": [
     {
       "name": "GOOGLE_CLIENT_ID",
-      "description": "Google OAuth client ID used for shopper sign-in. Create an OAuth client (Web application) in Google Cloud Console -> APIs & Services -> Credentials, then add the sandbox callback URL as an authorised redirect URI.",
-      "requiredAtBoot": false
+      "description": "Google OAuth client ID used for shopper sign-in: Google Cloud Console -> APIs & Services -> Credentials -> OAuth 2.0 Client ID (Web application). A real value ends with '.apps.googleusercontent.com'. The value stored so far is a short placeholder, so Google answers 'invalid_client' and sign-in cannot complete.",
+      "requiredAtBoot": false,
+      "generatedForDevelopment": true
     },
     {
       "name": "GOOGLE_CLIENT_SECRET",
-      "description": "Secret paired with GOOGLE_CLIENT_ID, from the same Google Cloud Console OAuth client.",
-      "requiredAtBoot": false
+      "description": "Secret paired with GOOGLE_CLIENT_ID, from the same Google Cloud Console OAuth client. A real value starts with 'GOCSPX-' and is about 35 characters. The value stored so far is a placeholder.",
+      "requiredAtBoot": false,
+      "generatedForDevelopment": true
     },
     {
       "name": "SESSION_SECRET",
